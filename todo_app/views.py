@@ -12,6 +12,7 @@ class ListListView(ListView):
 class ItemListView(ListView):
     model = ToDoItem
     template_name = "todo_app/todo_list.html"
+    context_object_name = "item_list_object"
 
     def get_queryset(self):
         return ToDoItem.objects.filter(todo_list_id=self.kwargs["list_id"])

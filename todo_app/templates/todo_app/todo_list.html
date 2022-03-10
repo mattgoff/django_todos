@@ -8,25 +8,35 @@
             <h3>{{ todo_list.title }} list:</h3>
         </div>
         <ul>
-            {% for todo in object_list %}
-            <li>
+            {% for todo in item_list_object %}
+            <div>
+                <div>
+                    {% if todo.complete is False%}
+                        <li>
+                            <div style="background-color:SteelBlue;"
+                                role="button"
+                                onclick="location.href= '{% url "item-update" todo_list.id todo.id %}'">
+                                {{ todo.title }}
+                                (Due {{ todo.due_date | date:"l, F j" }})
+                                (Complete {{ todo.complete }})
+                            </div>
+                        </li>
+                    {% endif %}
+                </div>
                 <div>
                     {% if todo.complete is True%}
-                    <div style="background-color:SteelBlue;"
-                        role="button"
-                        onclick="location.href= '{% url "item-update" todo_list.id todo.id %}'">
-                    {% else %}
-                    <div
-                        style="background-color:SeaGreen;"
-                        role="button"
-                        onclick="location.href= '{% url "item-update" todo_list.id todo.id %}'">
+                        <li>
+                            <div style="background-color:SeaGreen; text-decoration: line-through;"
+                                role="button"
+                                onclick="location.href= '{% url "item-update" todo_list.id todo.id %}'">
+                                {{ todo.title }}
+                                (Due {{ todo.due_date | date:"l, F j" }})
+                                (Complete {{ todo.complete }})
+                            </div>
+                        </li>
                     {% endif %}
-                        {{ todo.title }}
-                        (Due {{ todo.due_date | date:"l, F j" }})
-                        (Complete {{ todo.complete }})
-                    </div>
-                </div>
-            </li>
+            </div>
+            
             {% empty %}
             <p>There are no to-do items in this list.</p>
             {% endfor %}
