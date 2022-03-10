@@ -5,18 +5,25 @@
 <div>
     <div>
         <div>
-            <h3>Edit list:</h3>
-            <h5>{{ todo_list.title | upper }}</h5>
+            <h3>{{ todo_list.title }} list:</h3>
         </div>
         <ul>
             {% for todo in object_list %}
             <li>
                 <div>
-                    <div
+                    {% if todo.complete is True%}
+                    <div style="background-color:SteelBlue;"
                         role="button"
                         onclick="location.href= '{% url "item-update" todo_list.id todo.id %}'">
+                    {% else %}
+                    <div
+                        style="background-color:SeaGreen;"
+                        role="button"
+                        onclick="location.href= '{% url "item-update" todo_list.id todo.id %}'">
+                    {% endif %}
                         {{ todo.title }}
                         (Due {{ todo.due_date | date:"l, F j" }})
+                        (Complete {{ todo.complete }})
                     </div>
                 </div>
             </li>
